@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -38,11 +39,13 @@ private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 class MainActivity : ComponentActivity() {
 
     private lateinit var affiche: MutableState<String>
+    private lateinit var entr: MutableState<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         this.affiche = mutableStateOf("ee");
+        this.entr = mutableStateOf("cc bg")
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
             Carte2Theme {
@@ -51,6 +54,7 @@ class MainActivity : ComponentActivity() {
                         contenu()
                         Hello()
                         Bouton()
+                        Entree()
                     }
 
                 }
@@ -82,6 +86,11 @@ class MainActivity : ComponentActivity() {
 
     private fun showFail(err : Exception) {
         this.affiche.value = err.toString()
+    }
+
+    @Composable
+    fun Entree(){
+        TextField(value = this.entr.value, onValueChange = {newText : String -> this.entr.value = newText})
     }
 
     private fun showLoc(pos : Pair<Double,Double>){
