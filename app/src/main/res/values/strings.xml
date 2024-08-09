@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">Carte2</string>
+    <string-array name="qandr">
+        <item>Comment s\'appelle la meilleure recette à base de poids-chiche ?;cade</item>
+        <item>Quel nom qualifie une chamelle a 3 bosses ?;enceinte</item>
+        <item>Combien de personnes portaient un polo Faron lors de l\'event Faron ? (cf les photos sur le wazap);7</item>
+        <item>Qu\'es ce qui n\'est pas un filtre passe bas parmi
+            passoire(1), la moyenne des k dernières valeurs(2) et la crème solaire(3) ?;3</item>
+        <item>Quelle star resemble le plus à Ryan parmi Ryan Gosling(1), Jeremy Camponovo(2) et Grand Guirec(3) ?;1</item>
+        <item>Quelle fonction d\'usage remplissait Lalapi ?;taille-crayon</item>
+        <item>Ou est le cahier de Michael Regoresk parmi
+            dans l\'armoire(1),dans le sol(2),dans le plafond(3);3</item>
+        <item>Il fait pas caca ? (technique celle là) (oui/non);non</item>
+        <item>Donner la date de la soirée interdite au format (DD/MM/YYYY);15/07/2023</item>
+        <item>Combien de temps a duré le regne de délégué ? Donner le résultat en nombre de voyages vers Mars (sans compter les incidents Sophie Barthélemy et Luna Machin, commencé en CM1);13</item>
+        <item>qυελ εστ λε πρενομ δε πετιτε ετ φiου ?;anne-lise</item>
+        <item>Donner le nom de famille du chef du gang ennemi "SI";derail</item>
+        <item>Additionnez le chiffre du tilling window manager basé sur le protocole X et les minutes de l\'heure sacrée;27</item>
+        <item>Donnez le nom du glaçon se fabricant grâce à de l\'urée et une poele (principalement destiné à MSJ);disque de pisse</item>
+        <item>Donnez le nom de l\'unité temporelle necesssaire mesurer le temps d\'un repas de Jerem\'s;business day</item>
+        <item>Quel ingrédient ne figure pas dans la recette de la jérémiade parmi oeuf(1), patate(2), fromage râpé(3), lait de coco(4);4</item>
+        <item>Quel est le nom de la meilleure OS (hors linux) à libérer?;freebsd</item>
+    </string-array>
+
 </resources>

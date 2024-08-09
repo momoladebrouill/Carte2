@@ -1,14 +1,15 @@
 package com.example.carte2
 
 import android.annotation.SuppressLint
-import android.content.Context
+
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
+
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -21,6 +22,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -40,47 +42,93 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var affiche: MutableState<String>
     private lateinit var entr: MutableState<String>
+    private lateinit var ind: MutableState<Int>
+    private lateinit var q:MutableState<String>
+    private lateinit var r:MutableState<String>
+    private lateinit var qandr:List<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        this.affiche = mutableStateOf("ee");
-        this.entr = mutableStateOf("cc bg")
+        // Message d'affichage
+        this.affiche = mutableStateOf("trkl")
+        // User input
+        this.entr = mutableStateOf("")
+        // Indice dans la liste des questions et réponses
+        this.ind = mutableStateOf(0)
+        // questions et réponses
+        this.q = mutableStateOf("")
+        this.r = mutableStateOf("")
+        val actv = this
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
             Carte2Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Column(modifier = Modifier.padding(innerPadding)) {
+                        actv.qandr = stringArrayResource(R.array.qandr).toList()
+                        ErrorMessg()
                         contenu()
-                        Hello()
-                        Bouton()
-                        Entree()
+                        Etape()
+                        Proche()
                     }
 
                 }
             }
         }
     }
+
+
+    private fun updateQandR(){
+        val current = this.qandr[this.ind.value]
+        this.ind.value += 1
+        val sep = current.indexOf(";")
+        this.q.value = current.substring(0,sep)
+        this.r.value = current.substring(sep+1,current.length)
+    }
+    @Preview
     @Composable
-    private fun Bouton(){
-        Button(onClick = { this.affiche.value = "eknosian";posi()}) {
-            Text(text = "CLIQUE ALLEZ CLIQUE")
+    private fun Etape(){
+        val ind by this.ind
+        Text("$ind étape !")
+    }
+
+    @Composable
+    private fun Proche(modifier : Modifier = Modifier){
+        val quest by this.q
+        val resp by this.r
+        Text(quest, modifier = modifier)
+        val actv = this
+        Row {
+            TextField(
+                value = actv.entr.value,
+                onValueChange = { newText: String -> actv.entr.value = newText })
+            Button(onClick = {
+                if (actv.entr.value == resp) {
+                    updateQandR()
+                } else {
+                    actv.entr.value = "Non."
+                }
+            }) {
+                Text("Vérifier", modifier = modifier)
+            }
         }
     }
 
 
     private fun posi(){
-        getCurrentLocation(onGetCurrentLocationSuccess = {input : Pair<Double,Double> -> showLoc(input)}, onGetCurrentLocationFailed = {err : Exception -> showFail(err)});
+        getCurrentLocation(onGetCurrentLocationSuccess = {input : Pair<Double,Double> -> showLoc(input)}, onGetCurrentLocationFailed = {err : Exception -> showFail(err)})
     }
+
     @Composable
     private fun contenu(){
         RequestLocationPermission(
-            onPermissionGranted = { this.affiche.value = "yipee";},
+            onPermissionGranted = { this.affiche.value = "All good ! :D";},
             onPermissionDenied = { this.affiche.value = "sadee" },
             onPermissionsRevoked = {
-                this.affiche.value = "revoked wtf";
+                this.affiche.value = "revoked wtf"
                 posi()
-                });
+                })
 
     }
 
@@ -88,16 +136,11 @@ class MainActivity : ComponentActivity() {
         this.affiche.value = err.toString()
     }
 
-    @Composable
-    fun Entree(){
-        TextField(value = this.entr.value, onValueChange = {newText : String -> this.entr.value = newText})
-    }
-
     private fun showLoc(pos : Pair<Double,Double>){
         this.affiche.value = pos.toString()
     }
     @Composable
-    private fun Hello(modifier : Modifier = Modifier){
+    private fun ErrorMessg(modifier : Modifier = Modifier){
         val logs by this.affiche
         Text(logs, modifier = modifier.padding(all = 15.dp))
     }
