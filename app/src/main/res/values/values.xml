@@ -1,2 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- 5.98 ^ ... -->
+    <integer-array name="longitude">
+        <item>8762</item>
+        <item>1875</item>
+        <item>12781</item>
+        <item>18516</item>
+        <item>33360</item>
+        <item>44463</item>
+        <item>48327</item>
+        <item>49296</item>
+        <item>38332</item>
+        <item>57184</item>
+        <item>75473</item>
+        <item>72725</item>
+        <item>43949</item>
+        <item>37358</item>
+        <item>46517</item>
+        <item>40970</item>
+        <item>33267</item>
+        <item>30578</item>
+        <item>25381</item>
+        <item>26240</item>
+        <item>29567</item>
+        <item>23450</item>
+    </integer-array>
+    <!-- 43.1 ^ ... -->
+    <integer-array name="latitude">
+        <item>397956</item>
+        <item>425547</item>
+        <item>430569</item>
+        <item>439739</item>
+        <item>447627</item>
+        <item>455251</item>
+        <item>444559</item>
+        <item>422844</item>
+        <item>409426</item>
+        <item>387595</item>
+        <item>384175</item>
+        <item>364663</item>
+        <item>347885</item>
+        <item>363327</item>
+        <item>374499</item>
+        <item>378426</item>
+        <item>378287</item>
+        <item>382472</item>
+        <item>373156</item>
+        <item>337090</item>
+        <item>374574</item>
+        <item>392621</item>
+    </integer-array>
+    <integer-array name="parcoursLupercule">
+        <item>22</item>
+        <item>9</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>11</item>
+        <item>12</item>
+        <item>16</item>
+        <item>14</item>
+        <item>17</item>
+        <item>21</item>
+        <item>18</item>
+        <item>19</item>
+    </integer-array>
+    <integer-array name="parcoursTiposac">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>13</item>
+        <item>20</item>
+        <item>15</item>
+        <item>14</item>
+        <item>21</item>
+        <item>19</item>
+    </integer-array>
+    <integer-array name="parcoursVazogo">
+        <item>19</item>
+        <item>21</item>
+        <item>14</item>
+        <item>20</item>
+        <item>13</item>
+        <item>12</item>
+        <item>10</item>
+        <item>9</item>
+        <item>22</item>
+        <item>16</item>
+        <item>15</item>
+        <item>17</item>
+        <item>18</item>
+        <item>1</item>
+    </integer-array>
+</resources>
