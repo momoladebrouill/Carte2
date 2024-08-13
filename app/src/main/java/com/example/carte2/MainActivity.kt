@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,10 +24,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.integerArrayResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import com.example.carte2.ui.theme.Carte2Theme
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -40,23 +43,31 @@ import kotlinx.coroutines.delay
 import kotlin.math.round
 import kotlin.math.sqrt
 
-
 private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 const val distContact = 5.0
 class MainActivity : ComponentActivity() {
 
-    private lateinit var affiche: MutableState<String>
-    private lateinit var entr: MutableState<String>
-    private lateinit var ind: MutableState<Int>
-    private lateinit var q:MutableState<String>
-    private lateinit var r:MutableState<String>
+    // Message d'affichage
+    private var affiche = mutableStateOf("trkl")
+    // User input
+    private var entr  = mutableStateOf("")
+    // Indice dans le parcours
+    private var ind = mutableStateOf(0)
+    private var team = mutableStateOf("PAS SELECTED")
+    // Questions et réponses
+    private var q = mutableStateOf("")
+    private var r = mutableStateOf("")
+
     private lateinit var qandr:Array<String>
     private lateinit var long:IntArray
     private lateinit var latt:IntArray
-    private var team = mutableStateOf("PAS SELECTED")
+    private lateinit var indices:Array<String>
+    // parcours Lupercule, Vazogo, Tiposac
     private lateinit var pLu:IntArray
     private lateinit var pVa:IntArray
     private lateinit var pTi:IntArray
+
+    // current position
     private var cuLong = mutableStateOf(0.0)
     private var cuLatt = mutableStateOf(0.0)
     private var dist = mutableStateOf(1000.0)
@@ -64,72 +75,71 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Message d'affichage
-        this.affiche = mutableStateOf("trkl")
-        // User input
-        this.entr = mutableStateOf("")
-        // Indice dans la liste des questions et réponses
-        this.ind = mutableStateOf(0)
-        // questions et réponses
-        this.q = mutableStateOf("")
-        this.r = mutableStateOf("")
         val actv = this
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         setContent {
             Carte2Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(modifier = Modifier.padding(innerPadding)) {
-                        actv.qandr = stringArrayResource(R.array.qandr)
-                        actv.qandr.shuffle()
-                        actv.long = integerArrayResource(R.array.longitude)
-                        actv.latt = integerArrayResource(R.array.latitude)
-                        actv.pLu = integerArrayResource(R.array.parcoursLupercule)
-                        actv.pVa = integerArrayResource(R.array.parcoursVazogo)
-                        actv.pTi = integerArrayResource(R.array.parcoursTiposac)
-
-                        LaunchedEffect(key1 = Unit, block = {
-                            val distance by actv.dist
-                            while (true) {
-                                posi()
-                                delay(100)
-                                if(distance > distContact){
-                                    actv.q.value = ""
-                                }else{
-                                    updateQandR()
-                                }
+                Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
+                    LaunchedEffect(key1 = Unit, block = {
+                        val distance by actv.dist
+                        while (true) {
+                            posi()
+                            delay(100)
+                            if(distance > distContact){
+                                actv.q.value = ""
+                            }else{
+                                updateQandR()
                             }
-                        })
-                        RequestLocationPermission(
-                            onPermissionGranted = { actv.affiche.value = "All good ! :D";},
-                            onPermissionDenied = { actv.affiche.value = "sadee" },
-                            onPermissionsRevoked = {
-                                actv.affiche.value = "revoked wtf"
-                                posi()
-                            })
-                        Column (modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center){
-                            ChooseTeam()
-                            ErrorMessg()
-                            // Actual planned UI
-                            Etape()
-                            Parcours()
-                            Proche()
                         }
+                    })
+                    actv.qandr = stringArrayResource(R.array.qandr)
+                    actv.indices = stringArrayResource(R.array.indices)
+                    actv.qandr.shuffle()
+                    actv.long = integerArrayResource(R.array.longitude)
+                    actv.latt = integerArrayResource(R.array.latitude)
+                    actv.pLu = integerArrayResource(R.array.parcoursLupercule)
+                    actv.pVa = integerArrayResource(R.array.parcoursVazogo)
+                    actv.pTi = integerArrayResource(R.array.parcoursTiposac)
 
+                    RequestLocationPermission(
+                        onPermissionGranted = { actv.affiche.value = "All good ! :D";},
+                        onPermissionDenied = { actv.affiche.value = "sadee" },
+                        onPermissionsRevoked = {
+                            actv.affiche.value = "revoked wtf"
+                            posi()
+                        })
+
+                    Column (modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center){
+                        ChooseTeam()
+                        ErrorMessg()
+                        // Actual planned UI
+                        Etape()
+                        Parcours()
+                        Proche()
                     }
-
                 }
             }
         }
-
     }
 
+    // Update the values of the question and answer
     private fun updateQandR(){
         val current = this.qandr[this.ind.value]
         val sep = current.indexOf(";")
         this.q.value = current.substring(0,sep)
         this.r.value = current.substring(sep+1,current.length)
     }
+
+    private fun posi(){
+        getCurrentLocation(
+            onGetCurrentLocationSuccess = {
+                pos : Pair<Double,Double> ->
+                this.cuLong.value = pos.second
+                this.cuLatt.value = pos.first },
+            onGetCurrentLocationFailed = {err : Exception ->
+                this.affiche.value = err.toString()})
+    }
+
 
     @Composable
     private fun ChooseTeam(){
@@ -151,20 +161,16 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-    private fun selected() : IntArray{
-        if(this.team.value == "Vazogo"){
-            return this.pVa
-        }else if(this.team.value == "Lupercule"){
-            return this.pLu
-        }else if(this.team.value == "Tiposac"){
-            return this.pTi
-        }
-        return intArrayOf(1,2)
-    }
 
     @Composable
     private fun Parcours(){
-        val parcours:IntArray = selected()
+        val parcours:IntArray = when (this.team.value) {
+            "Vazogo" -> { this.pVa }
+            "Lupercule" -> { this.pLu }
+            "Tiposac" -> { this.pTi }
+            else -> intArrayOf(6, 2)
+        }
+
         val ind by this.ind
         val long by this.cuLong
         val latt by this.cuLatt
@@ -176,6 +182,7 @@ class MainActivity : ComponentActivity() {
         this.dist.value = round3(sqrt(deltaLong*deltaLong + deltaLatt*deltaLatt))
 
         Text("vers le Nord de : $deltaLatt deg \nvers l'Est de : $deltaLong deg \nDistance : ${this.dist.value} µ-metron")
+        Text("Indice du lieu : ${this.indices[parcours[ind]-1]}")
     }
 
     @Composable
@@ -186,15 +193,22 @@ class MainActivity : ComponentActivity() {
             textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()
         )
     }
-
+    @Preview
     @Composable
     private fun Proche(modifier : Modifier = Modifier){
         val quest by this.q
         val resp by this.r
         val dist by this.dist
-        Text(quest, modifier = modifier)
+        Text(quest, modifier = modifier.background(
+            color = androidx.compose.ui.graphics.Color.LightGray
+        ))
         val actv = this
-        Row {
+        Row(
+            modifier = Modifier.fillMaxWidth().background(
+                color = androidx.compose.ui.graphics.Color.LightGray),
+            verticalAlignment = Alignment.CenterVertically
+        )
+            {
             TextField(
                 value = actv.entr.value,
                 onValueChange = { newText: String -> actv.entr.value = newText })
@@ -210,20 +224,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-
-    private fun posi(){
-        getCurrentLocation(onGetCurrentLocationSuccess = {input : Pair<Double,Double> -> showLoc(input)}, onGetCurrentLocationFailed = {err : Exception -> showFail(err)})
-    }
-
-    private fun showFail(err : Exception) {
-        this.affiche.value = err.toString()
-    }
-
-    private fun showLoc(pos : Pair<Double,Double>){
-        this.cuLong.value = pos.second
-        this.cuLatt.value = pos.first
-    }
-
     @Composable
     private fun ErrorMessg(modifier : Modifier = Modifier){
         val logs by this.affiche
@@ -231,19 +231,13 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    /**
-     * Checks if location permissions are granted.
-     *
-     * @return true if both ACCESS_FINE_LOCATION and ACCESS_COARSE_LOCATION permissions are granted; false otherwise.
-     */
     private fun areLocationPermissionsGranted(): Boolean {
-        return (ActivityCompat.checkSelfPermission(
-            this, android.Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    this, android.Manifest.permission.ACCESS_COARSE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED)
+        return (
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                )
     }
+
     /**
      * Retrieves the current user location asynchronously.
      *
@@ -254,6 +248,7 @@ class MainActivity : ComponentActivity() {
      * @param priority Indicates the desired accuracy of the location retrieval. Default is high accuracy.
      *        If set to false, it uses balanced power accuracy.
      */
+
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation(
         onGetCurrentLocationSuccess:  (Pair<Double, Double>) -> Unit,
@@ -290,11 +285,11 @@ fun round3(x:Double): Double{
 
 /**
  * Composable function to request location permissions and handle different scenarios.
- *
  * @param onPermissionGranted Callback to be executed when all requested permissions are granted.
  * @param onPermissionDenied Callback to be executed when any requested permission is denied.
  * @param onPermissionsRevoked Callback to be executed when previously granted permissions are revoked.
  */
+
 @Composable
 @OptIn(ExperimentalPermissionsApi::class)
 fun RequestLocationPermission(
@@ -309,12 +304,10 @@ fun RequestLocationPermission(
             android.Manifest.permission.ACCESS_FINE_LOCATION,
         )
     )
-
     // Use LaunchedEffect to handle permissions logic when the composition is launched.
     LaunchedEffect(key1 = permissionState) {
         // Check if all previously granted permissions are revoked.
-        val allPermissionsRevoked =
-            permissionState.permissions.size == permissionState.revokedPermissions.size
+        val allPermissionsRevoked = permissionState.permissions.size == permissionState.revokedPermissions.size
 
         // Filter permissions that need to be requested.
         val permissionsToRequest = permissionState.permissions.filter {

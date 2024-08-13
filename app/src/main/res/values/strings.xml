@@ -21,5 +21,29 @@
         <item>Quel ingrédient ne figure pas dans la recette de la jérémiade parmi oeuf(1), patate(2), fromage râpé(3), lait de coco(4);4</item>
         <item>Quel est le nom de la meilleure OS (hors linux) à libérer?;freebsd</item>
     </string-array>
+    <string-array name="indices">
+        <item>Daudet</item>
+        <item>Banc gay</item>
+        <item>Allée Beausoleil</item>
+        <item>Condamine</item>
+        <item>étoile Anarchique</item>
+        <item>Fontaine jeanne (monument local)</item>
+        <item>Lac aux poissons de con</item>
+        <item>Rivière aux grenouilles</item>
+        <item>Espace Pierre Belle</item>
+        <item>Vielle rue</item>
+        <item>Char Verdun</item>
+        <item>Boulangerie Texier</item>
+        <item>Flo</item>
+        <item>Grenouille</item>
+        <item>Ecole Primaire</item>
+        <item>Mairie</item>
+        <item>La place morbide</item>
+        <item>Boulangerie chez Chantale</item>
+        <item>Fontaine herbue</item>
+        <item>Casino maintenant Auchan</item>
+        <item>Prison de la Valette city</item>
+        <item>Statues qui Ken</item>
+    </string-array>
 
 </resources>
