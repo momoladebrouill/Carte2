@@ -1,49 +1,57 @@
 <resources>
     <string name="app_name">Carte2</string>
     <string-array name="qandr">
-        <item>Comment s\'appelle la meilleure recette à base de poids-chiche ?;cade</item>
+        <item>Comment s\'appelle la meilleure recette à base de poids-chiche du monde ?;cade</item>
         <item>Quel nom qualifie une chamelle a 3 bosses ?;enceinte</item>
         <item>Combien de personnes portaient un polo Faron lors de l\'event Faron ? (cf les photos sur le wazap);7</item>
         <item>Qu\'es ce qui n\'est pas un filtre passe bas parmi
-            passoire(1), la moyenne des k dernières valeurs(2) et la crème solaire(3) ?;3</item>
-        <item>Quelle star resemble le plus à Ryan parmi Ryan Gosling(1), Jeremy Camponovo(2) et Grand Guirec(3) ?;1</item>
+            passoire(1), la moyenne des n-dernières valeurs(2) et la crème solaire(3) ?;3</item>
+        <item>D\'après l\'intelligence artificielle, quelle star resemble le plus à Ryan parmi Ryan Gosling(1), Nagui(2) et Grand Guirec(3) ?;1</item>
         <item>Quelle fonction d\'usage remplissait Lalapi ?;taille-crayon</item>
-        <item>Ou est le cahier de Michael Regoresk parmi
-            dans l\'armoire(1),dans le sol(2),dans le plafond(3);3</item>
-        <item>Il fait pas caca ? (technique celle là) (oui/non);non</item>
-        <item>Donner la date de la soirée interdite au format (DD/MM/YYYY);15/07/2023</item>
-        <item>Combien de temps a duré le regne de délégué ? Donner le résultat en nombre de voyages vers Mars (sans compter les incidents Sophie Barthélemy et Luna Machin, commencé en CM1);13</item>
+        <!--item>Ou est le cahier de Michael Regoresk ?
+            dans l\'armoire(1),dans le sol(2),dans le plafond(3);3</item-->
+        <item>Qui est mort au kabaon après s\'être rempli d\'eau ?;barque</item>
+        <item>Compléter le mantra : Pour le … s\'il vous plaît;5125</item>
+        <item>Combien de temps a duré le règne de délégué ?
+            Donner le résultat en nombre de voyages vers Mars (en oubliant les incidents Sophie Barthélemy et Luna Machin, sachant que j\'ai commencé en CM1);13</item>
         <item>qυελ εστ λε πρενομ δε πετιτε ετ φiου ?;anne-lise</item>
         <item>Donner le nom de famille du chef du gang ennemi "SI";derail</item>
         <item>Additionnez le chiffre du tilling window manager basé sur le protocole X et les minutes de l\'heure sacrée;27</item>
         <item>Donnez le nom du glaçon se fabricant grâce à de l\'urée et une poele (principalement destiné à MSJ);disque de pisse</item>
-        <item>Donnez le nom de l\'unité temporelle necesssaire mesurer le temps d\'un repas de Jerem\'s;business day</item>
+        <item>Donnez le nom de l\'unité temporelle permettant de mesurer le temps d\'un repas de Jerem\'s;business day</item>
         <item>Quel ingrédient ne figure pas dans la recette de la jérémiade parmi oeuf(1), patate(2), fromage râpé(3), lait de coco(4);4</item>
-        <item>Quel est le nom de la meilleure OS (hors linux) à libérer?;freebsd</item>
+        <item>Quel est le nom de la meilleure OS (non basé Linux) à libérer?;freebsd</item>
+        <item>Qui as eu le plus de temps avec la balle ?;maxence</item>
+        <item>Qui est le plus addict au gambling ?;baptiste</item>
+        <item>Quel est l\'année de naissance d\'Anna B ?;2000</item>
+        <item>Combien d\'année de prépa ont fait madame Bouchet et l\'ancien en cumulé ?;7</item>
+        <item>Qui est le plus hétéro entre le mec qui a baisé tous les mecs et qui a détesté (1) ou un mec qui a rien fait (2)? (du point de vue systémique);2</item>
+        <item>Que cultive Amélie sur sa terrasse?;fromage</item>
+        <item>Quel mot permet d\'invoquer Romain au lower après minuit?;waza</item>
     </string-array>
     <string-array name="indices">
         <item>Daudet</item>
-        <item>Banc gay</item>
-        <item>Allée Beausoleil</item>
+        <item>Banc gay / tanqupé</item>
+        <item>Chez Grand Guirec</item>
         <item>Condamine</item>
         <item>étoile Anarchique</item>
-        <item>Fontaine jeanne (monument local)</item>
+        <item>Fontaine jeanne (monument valettois)</item>
         <item>Lac aux poissons de con</item>
         <item>Rivière aux grenouilles</item>
         <item>Espace Pierre Belle</item>
-        <item>Vielle rue</item>
+        <item>Vielle rue pas loin de chez Francis et de l\'école catho</item>
         <item>Char Verdun</item>
-        <item>Boulangerie Texier</item>
+        <item>Boulangerie Texier + pizzas de l\'oncle de flo</item>
         <item>Flo</item>
         <item>Grenouille</item>
-        <item>Ecole Primaire</item>
+        <item>Ferry fabié</item>
         <item>Mairie</item>
-        <item>La place morbide</item>
-        <item>Boulangerie chez Chantale</item>
+        <item>La place morbide pas loin du vendeur de bonbons</item>
+        <item>Boulangerie chez Chantale + stage de 3eme de Gael</item>
         <item>Fontaine herbue</item>
-        <item>Casino maintenant Auchan</item>
+        <item>Casino maintenant Auchan rip</item>
         <item>Prison de la Valette city</item>
-        <item>Statues qui Ken</item>
+        <item>Statues qui Ken(ent)</item>
     </string-array>
 
 </resources>

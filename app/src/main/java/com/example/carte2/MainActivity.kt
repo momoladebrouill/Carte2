@@ -14,14 +14,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
@@ -51,6 +49,7 @@ class MainActivity : ComponentActivity() {
     private var affiche = mutableStateOf("trkl")
     // User input
     private var entr  = mutableStateOf("")
+    private var chrono = mutableStateOf(0.0)
     // Indice dans le parcours
     private var ind = mutableStateOf(0)
     private var team = mutableStateOf("PAS SELECTED")
@@ -85,6 +84,10 @@ class MainActivity : ComponentActivity() {
                         while (true) {
                             posi()
                             delay(100)
+                            if (actv.chrono.value > 0.0) {
+                                actv.chrono.value -= 0.1
+                                actv.entr.value = "Attendre encore ${round3(actv.chrono.value)}s"
+                            }
                             if(distance > distContact){
                                 actv.q.value = ""
                             }else{
@@ -213,10 +216,13 @@ class MainActivity : ComponentActivity() {
                 value = actv.entr.value,
                 onValueChange = { newText: String -> actv.entr.value = newText })
             Button(onClick = {
-                if (actv.entr.value == resp && dist < distContact) {
+                if (actv.entr.value.lowercase() == resp && dist < distContact) {
                     actv.ind.value += 1
                 } else {
                     actv.entr.value = "Non."
+                    if(resp.length == 1){
+                        actv.chrono.value = 60.0
+                    }
                 }
             }) {
                 Text("Vérifier", modifier = modifier)
